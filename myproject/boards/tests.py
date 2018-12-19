@@ -1,14 +1,3 @@
-# from django.test import TestCase
-# from django.urls import resolve
-# # Create your tests here.
-# from django.urls import reverse
-# from django.test import TestCase
-
-# from django.test import TestCase
-# from django.urls import resolve, reverse
-#
-# from .models import Board
-# from .views import TopicListView
 from django.urls import reverse
 from django.urls import resolve
 from django.test import TestCase
@@ -16,16 +5,6 @@ from .views import home, board_topics
 from .models import Board
 
 
-
-# class HomeTests(TestCase):
-#     def test_home_view_status_code(self):
-#         url = reverse('home')
-#         response = self.client.get(url)
-#         self.assertEquals(response.status_code, 200)
-#
-#     def test_home_url_resolves_home_view(self):
-#         view = resolve('/')
-#         self.assertEquals(view.func, home)
 class HomeTests(TestCase):
     def setUp(self):
         self.board = Board.objects.create(name='Django', description='Django board.')
