@@ -31,6 +31,8 @@ def new_topic(request, pk):
     board = get_object_or_404(Board, pk=pk)
     user = User.objects.first()  # TODO: get the currently logged in user
     if request.method == 'POST':
+         #If the request is a post process the submitted form data using the class NewTopicForm in forms.py
+         #then redirect to the topics list for that board
         form = NewTopicForm(request.POST)
         if form.is_valid():
             topic = form.save(commit=False)
@@ -44,7 +46,10 @@ def new_topic(request, pk):
             )
             return redirect('board_topics', pk=board.pk)  # TODO: redirect to the created topic page
     else:
+         #If the request is NOT a post create a form instance using the class NewTopicForm in forms.py
         form = NewTopicForm()
+    #render the page but notice that it does so passing the board object instantiated in the line above
+    #also notice that this render only happens on a GET on a POST we never get here
     return render(request, 'new_topic.html', {'board': board, 'form': form})
 
 
