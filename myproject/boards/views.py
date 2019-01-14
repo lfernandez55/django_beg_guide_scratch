@@ -2,18 +2,9 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import Board, Topic, Post
 from django.contrib.auth.models import User
 from .forms import NewTopicForm
+from django.contrib.auth.decorators import login_required
 
-# def home(request):
-#     # return HttpResponse('Hello, World!')
-#     boards = Board.objects.all()
-#     boards_names = list()
-#
-#     for board in boards:
-#         boards_names.append(board.name)
-#
-#     response_html = '<br>'.join(boards_names)
-#
-#     return HttpResponse(response_html)
+
 
 def home(request):
     boards = Board.objects.all()
@@ -27,9 +18,10 @@ def board_topics(request, pk):
     board = get_object_or_404(Board, pk=pk)
     return render(request, 'topics.html', {'board': board})
 
+@login_required
 def new_topic(request, pk):
     board = get_object_or_404(Board, pk=pk)
-    user = User.objects.first()  # TODO: get the currently logged in user
+    # user = User.objects.first()  # TODO: get the currently logged in user
     if request.method == 'POST':
          #If the request is a post process the submitted form data using the class NewTopicForm in forms.py
          #then redirect to the topics list for that board
@@ -52,7 +44,9 @@ def new_topic(request, pk):
     #also notice that this render only happens on a GET on a POST we never get here
     return render(request, 'new_topic.html', {'board': board, 'form': form})
 
-
+def topic_posts(request, pk, topic_pk):
+    topic = get_object_or_404(Topic, board__pk=pk, pk=topic_pk)
+    return render(request, 'topic_posts.html', {'topic': topic})
 
 # def new_topic(request, pk):
 #     board = get_object_or_404(Board, pk=pk)
