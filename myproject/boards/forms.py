@@ -1,5 +1,11 @@
 from django import forms
 from .models import Topic
+from .models import Post
+
+class PostForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = ['message', ]
 
 class NewTopicForm(forms.ModelForm):
     # message = forms.CharField(widget=forms.Textarea(), max_length=4000)
