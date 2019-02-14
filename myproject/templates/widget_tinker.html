@@ -1,0 +1,46 @@
+{% load form_tags widget_tweaks %}
+
+<form method="post" novalidate>
+  {% csrf_token %}
+
+{% if form.non_field_errors %}
+  <div class="alert alert-danger" role="alert">
+    {% for error in form.non_field_errors %}
+      <p{% if forloop.last %} class="mb-0"{% endif %}>{{ error }}</p>
+    {% endfor %}
+  </div>
+{% endif %}
+
+{% for field in form %}
+  <div class="form-group">
+    {{ field.label_tag }}xx
+    <b>{{ field|field_type }} {{ field|widget_type }} {{ field|foo }}  {{ field.html_name }} </b><br>
+    Does not require loading of form_tags: {% render_field field class=field|widget_type %}<br>
+    Requires loading of form_tags (form_tags are defined in templatetags/form_tags.py):
+    {% render_field field class=field|input_class %}<br>
+
+    DDDD:{% render_field field class=field|foo %}<br>
+
+    class="zzzz"{% render_field field class='zzzzz' %}<br>
+
+    placeholder bla bla bla {% render_field field placeholder="Bla bla bla" %}<br>
+
+    rows=1{% render_field field rows="1" %}<br>
+
+    {{ field|field_type }} {{ field|widget_type }} {{ field.html_name }}<br>
+
+    {% for error in field.errors %}
+      <div class="invalid-feedback">
+        zz{{ error }}bb
+      </div>
+    {% endfor %}
+    {% if field.help_text %}
+      <small class="form-text text-muted">
+        ee{{ field.help_text|safe }}bb
+      </small>
+    {% endif %}
+  </div>
+{% endfor %}
+
+<button type="submit" class="btn btn-success">Post</button>
+</form>

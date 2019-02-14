@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils.text import Truncator
+
 
 # Create your models here.
 class Board(models.Model):

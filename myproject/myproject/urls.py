@@ -52,4 +52,7 @@ urlpatterns = [
 
     re_path(r'^boards/(?P<pk>\d+)/topics/(?P<topic_pk>\d+)/$', views.topic_posts, name='topic_posts'),
     re_path(r'^boards/(?P<pk>\d+)/topics/(?P<topic_pk>\d+)/reply/$', views.reply_topic, name='reply_topic'),
+
+    path('widget_tinker/', views.widget_tinker, name='widget_tinker'),
+
 ]

@@ -29,12 +29,12 @@ def new_topic(request, pk):
         if form.is_valid():
             topic = form.save(commit=False)
             topic.board = board
-            topic.starter = user
+            topic.starter = request.user
             topic.save()
             post = Post.objects.create(
                 message=form.cleaned_data.get('message'),
                 topic=topic,
-                created_by=user
+                created_by=request.user
             )
             # return redirect('board_topics', pk=board.pk)  # TODO: redirect to the created topic page
             return redirect('topic_posts', pk=pk, topic_pk=topic.pk)
@@ -66,6 +66,10 @@ def reply_topic(request, pk, topic_pk):
         form = PostForm()
     return render(request, 'reply_topic.html', {'topic': topic, 'form': form})
 
+def widget_tinker(request):
+    board = get_object_or_404(Board, pk=2)
+    form = NewTopicForm()
+    return render(request, 'widget_tinker.html', {'form': form})
 
 # def new_topic(request, pk):
 #     board = get_object_or_404(Board, pk=pk)
